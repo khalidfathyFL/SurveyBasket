@@ -1,4 +1,7 @@
-﻿
+﻿using Mapster;
+using SurveyBasket.Contracts.Requests;
+using SurveyBasket.Contracts.Responses;
+using SurveyBasket.Mapping;
 using SurveyBasket.ServicesContracts;
 
 namespace SurveyBasket.Controllers;
@@ -13,7 +16,7 @@ public class PollsController(IPollService pollService) : ControllerBase
     [HttpGet("")]
     public IActionResult GetAll()
     {
-        return Ok(_pollService.GetAll());
+        return Ok(_pollService.GetAll().Adapt<PollResponse>());
     }
 
     [HttpGet("{id}")]
@@ -21,20 +24,20 @@ public class PollsController(IPollService pollService) : ControllerBase
     {
         var poll = _pollService.GetById(id);
         
-        return poll is null ? NotFound(): Ok(poll);
+        return poll is null ? NotFound(): Ok(poll.Adapt<PollResponse>());
      
     }
 
     [HttpPost("")]
-    public IActionResult Create([FromBody] Poll poll)
+    public IActionResult Create([FromBody] CreatePollRequest poll)
     {
         if (poll is null)
             return BadRequest("Poll cannot be null");
         
         
-        _pollService.Add(poll);
+        var newPoll =  _pollService.Add(poll.Adapt<Poll>());
 
-        return CreatedAtAction(nameof(Get), new { id = poll.Id }, poll);
+        return CreatedAtAction(nameof(Get), new { id = newPoll.Id }, newPoll);
     }
 
     [HttpPut("{id}")]
