@@ -1,8 +1,4 @@
-﻿using SurveyBasket.Contracts.Requests;
-using SurveyBasket.Contracts.Responses;
-
-namespace SurveyBasket.Mapping;
-
+﻿namespace SurveyBasket.Mapping;
 
 // here if we will use manual mapping but i will use mapster  for mapping
 
