@@ -7,3 +7,4 @@ global using FluentValidation;
 global using SurveyBasket.Entities;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+global using SurveyBasket.Abstractions;
